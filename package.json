@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "server": "npm run build-client && babel-node app/server.js --presets @babel/env @babel/react",
+    "build-client": "webpack --config ./webpack.config.ssr.js",
     "start": "webpack-dev-server --progress --colors -w"
   },
   "keywords": [],
   "author": "AJ",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.5",
@@ -20,6 +25,7 @@
     "webpack-dev-server": "^3.4.1"
   },
   "dependencies": {
+    "express": "^4.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
