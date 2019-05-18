@@ -1,4 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
+import RGB from './RGB'
 
-render(<h1>Hello React!!</h1>, document.querySelector('#app'))
+render(<RGB />, document.querySelector('#app'))
