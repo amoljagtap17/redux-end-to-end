@@ -16,6 +16,13 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  module: {
+    rules: [{
+      test: /.jsx?$/,
+      use: ['babel-loader'],
+      exclude: /node_modules/
+    }]
+  },
   plugins: [
     new BrowserSyncPlugin({
       host: 'localhost',
