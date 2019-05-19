@@ -1,21 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import * as actions from './actions'
 import ColorBlock from './ColorBlock'
 import Slider from './Slider'
 
-const initialState = {
-  r: 244,
-  g: 158,
-  b: 66
-}
-
-const RGB = () => {
-  const [color, setColor] = useState(initialState)
-  const { r, g, b } = color
-  const update = color => val =>
-    setColor(prevColor => ({
-      ...prevColor,
-      [color]: val
-    }))
+const RGB = ({ r, g, b, updateColor }) => {
+  const update = color => val => updateColor(color, val)
 
   return (
     <center>
@@ -27,4 +17,13 @@ const RGB = () => {
   )
 }
 
-export default RGB
+export default connect(
+  state => ({
+    r: state.r,
+    g: state.g,
+    b: state.b
+  }),
+  {
+    updateColor: actions.updateColor
+  }
+)(RGB)
