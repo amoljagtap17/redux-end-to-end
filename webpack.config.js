@@ -17,11 +17,17 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   module: {
-    rules: [{
-      test: /.jsx?$/,
-      use: ['babel-loader'],
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        test: /.jsx?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/
+      },
+      {
+        test: /.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
   },
   plugins: [
     new BrowserSyncPlugin(

@@ -10,6 +10,7 @@ export default `
         href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700&display=swap"
         rel="stylesheet"
       />
+      <link rel="stylesheet" href="/assets/app.css" />
     </head>
     <body>
       <div id="app"></div>
