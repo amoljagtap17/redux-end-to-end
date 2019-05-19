@@ -1,6 +1,8 @@
+import * as actionTypes from './actionTypes'
+
 export function updateColor(color, value) {
   return {
-    type: 'SLIDE',
+    type: actionTypes.SLIDE,
     color,
     value
   }
