@@ -1,35 +1,13 @@
 import express from 'express'
-import cors from 'cors'
-import Tokens from 'csrf'
-import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import render from './serverRender'
 import User from './server/models/User'
 
-const tokens = new Tokens()
-const csrfSecret = tokens.secretSync()
-
 const app = express()
+
 app.use(bodyParser.json())
-app.use(cookieParser())
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
-
-function setCsrf(req, res, next) {
-  res.cookie('XSRF-TOKEN', tokens.create(csrfSecret))
-  next()
-}
-
-function checkCsrf(req, res, next) {
-  const token = req.get('X-XSRF-TOKEN')
-
-  if (!tokens.verify(csrfSecret, token)) {
-    return res.status(403).json({ code: 'invalid_csrf_token' })
-  }
-
-  next()
-}
 
 function lookup(username = '') {
   return User.where({ username }).fetch().then(user => user && user.toJSON())
@@ -48,18 +26,13 @@ api.post('/session', (req, res) => {
     } else {
       const { password: _, ...rest } = user
       const token = jwt.sign(rest, 'SUPERDUPERSECRET', { expiresIn: '24h' })
-
-      setCsrf(req, res, () => {
-        res
-          .cookie('auth-token', token, { httpOnly: true })
-          .json({ token, user: rest })
-      })
+      res.json({ token, user: rest })
     }
   })
 })
 
 function decode(req, res, next) {
-  const token = req.get('auth-token') || req.cookies['auth-token']
+  const token = req.get('auth-token')
 
   if (token) {
     jwt.verify(token, 'SUPERDUPERSECRET', (err, decoded) => {
@@ -75,11 +48,7 @@ function decode(req, res, next) {
   }
 }
 
-api.use(decode)
-api.use(checkCsrf)
-api.use(setCsrf)
-
-api.get('/session', (req, res) => {
+api.get('/session', decode, (req, res) => {
   res.json({ user: req.currentUser })
 })
 
