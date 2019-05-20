@@ -18,11 +18,7 @@ const RGB = ({ r, g, b, updateColor }) => {
 }
 
 export default connect(
-  state => ({
-    r: state.r,
-    g: state.g,
-    b: state.b
-  }),
+  state => state.rgb,
   {
     updateColor: actions.updateColor
   }
