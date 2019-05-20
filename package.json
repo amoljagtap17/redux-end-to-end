@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "npm run build-client && babel-node app/server.js --presets @babel/env @babel/react",
+    "server": "npm run build-client && nodemon app/server.js --exec babel-node --presets @babel/env @babel/react",
     "build-client": "webpack --config ./webpack.config.ssr.js",
     "start": "webpack-dev-server --progress --colors -w"
   },
@@ -24,6 +24,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "faker": "^4.1.0",
     "node-sass": "^4.12.0",
+    "nodemon": "^1.19.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.31.0",
@@ -32,8 +33,10 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "bookshelf": "^0.14.2",
     "express": "^4.17.0",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.17.0-next3",
     "pg": "^7.11.0",
     "react": "^16.8.6",
